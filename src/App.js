@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Projects from './pages/Projects';
+import Skills from './pages/Skills';
+import GitHub from './pages/GitHubb';
+import CosmicBackground from './components/CosmicBackground';
+import ContactModal from './components/ContactModal';
+import ConstellationNavigation from './components/ConstellationNavigation';
 
 function App() {
+  const [isContactOpen, setIsContactOpen] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="relative min-h-screen">
+        {/* Cosmic Background */}
+        <CosmicBackground />
+        
+        {/* Constellation Navigation */}
+        <ConstellationNavigation />
+
+        {/* Contact Modal */}
+        <ContactModal 
+          isOpen={isContactOpen} 
+          onClose={() => setIsContactOpen(false)} 
+        />
+
+        <Routes>
+          <Route 
+            path="/" 
+            element={<Home openContact={() => setIsContactOpen(true)} />} 
+          />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/skills" element={<Skills />} />
+          <Route path="/github" element={<GitHub />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
